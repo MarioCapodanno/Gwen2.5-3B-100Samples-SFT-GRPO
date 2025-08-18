@@ -1,8 +1,5 @@
 ## Model Details
 
-### Model Description
-This model is a fine-tuned version of Qwen/Qwen2.5-3B, specifically optimized for competitive programming and code generation tasks with step-by-step reasoning capabilities. The model has been trained using a two-stage approach: Supervised Fine-Tuning (SFT) followed by Generalized Reward-guided Policy Optimization (GRPO).
-
 - **Developed by:** o5-mini team, Politecnico di Milano
 - **Model type:** Causal Language Model
 - **Language(s):** English (primary), Python code
@@ -74,7 +71,7 @@ The model was evaluated on LiveCodeBench problem set v1, focusing on code genera
 |-------|--------|--------|-------------|---------------|-------------|
 | **Fine-tuned Model** | 0.1885 (18.85%) | 0.28 (28.00%) | 0.4239 (42.39%) | 0.0905 (9.05%) | 0.0 (0%) |
 | **Base Qwen2.5-3B** | 0.1585 (15.85%) | 0.2175 (21.75%) | 0.3127 (31.27%) | 0.1131 (11.31%) | 0.0 (0%) |
-| **Improvement** | **+3.0%** | **+7.25%** | **+11.12%** | **+2.26%** | **±0%** |
+| **Improvement** | **+3.0%** | **+7.25%** | **+11.12%** | **-2.26%** | **±0%** |
 
 ### Model Architecture & Reasoning Format
 
