@@ -1,0 +1,12 @@
+-r base.txt
+transformers
+accelerate
+peft
+trl==0.15.2
+bitsandbytes
+xformers==0.0.29.post3
+sentencepiece
+unsloth
+protobuf
+hf_transfer
+

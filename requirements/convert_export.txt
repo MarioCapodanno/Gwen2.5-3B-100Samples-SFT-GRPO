@@ -1,0 +1,6 @@
+-r base.txt
+transformers
+peft
+sentencepiece
+# llama.cpp conversion utilities are invoked via cloned repo scripts
+

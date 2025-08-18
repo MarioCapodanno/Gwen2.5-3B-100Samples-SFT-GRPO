@@ -1,0 +1,4 @@
+-r base.txt
+# Ollama installed via system script; Python reqs minimal
+requests
+

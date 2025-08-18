@@ -1,0 +1,6 @@
+-r base.txt
+scikit-learn
+wordcloud
+bertopic
+python-terrier==0.11.0
+

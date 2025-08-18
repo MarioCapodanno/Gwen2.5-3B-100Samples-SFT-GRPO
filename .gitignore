@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+.env
+.pytest_cache/
+.mypy_cache/
+
+# Build / dist
+build/
+dist/
+*.egg-info/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Data & outputs
+data/
+outputs/
+checkpoints/
+wandb/
+mlruns/
+logs/
+
+# Model weights / artifacts
+*.bin
+*.pt
+*.pth
+*.safetensors
+*.gguf
+
+# Repos cloned locally
+llama.cpp/
+
+# OS files
+.DS_Store
+Thumbs.db
+

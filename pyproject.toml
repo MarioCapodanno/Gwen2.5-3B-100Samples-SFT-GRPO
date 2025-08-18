@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gwen25"
+version = "0.1.0"
+description = "todo"
+requires-python = ">=3.10"
+authors = [
+  { name = "o5Mini_PolimiGroup" }
+]
+license = { file = "LICENSE" }
+keywords = ["qwen", "transformers", "trl", "unsloth", "fine-tuning", "gguf", "ollama"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://huggingface.co/MarioCap/Qwen2.5-3B-OCR-100S"
+
+[project.scripts]
+gwen25 = "gwen25.cli:main"
+
+
