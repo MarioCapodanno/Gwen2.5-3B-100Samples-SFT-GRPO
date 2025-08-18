@@ -1,3 +1,11 @@
+##  Results (LiveCodeBench Evaluation)
+
+| Model | Pass@1 | Pass@5 | Easy Pass@1 | Medium Pass@1 | Hard Pass@1 |
+|-------|:------:|:------:|:-----------:|:-------------:|:-----------:|
+| **Fine-tuned Model** | **18.85%** | **28.00%** | **42.39%** | **9.05%** | **0.00%** |
+|  Base Qwen2.5-3B | 15.85% | 21.75% | 31.27% | 11.31% | 0.00% |
+| **Improvement** | **+3.00%** | **+7.25%** | **+11.12%** | **-2.26%** | **±0.00%** |
+
 ### Installation
 
 You can install the whole package in editable mode, or only the requirements you need per task.
