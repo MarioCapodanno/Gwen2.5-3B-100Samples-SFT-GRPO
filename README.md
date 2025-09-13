@@ -1,3 +1,33 @@
+## Model Details
+
+- **Developed by:** o5-mini team, Politecnico di Milano
+- **Model type:** Causal Language Model
+- **Language(s):** English (primary), Python code
+- **Finetuned from model:** Qwen/Qwen2.5-3B
+- **Model size:** 3B parameters + LoRA adapters (rank 32)
+
+### Model Sources
+- **Base Model:** [Qwen/Qwen2.5-3B](https://huggingface.co/Qwen/Qwen2.5-3B)
+- **Training Dataset:** nvidia/OpenCodeReasoning (split_0)
+- **Training Framework:** Unsloth + TRL (Transformers Reinforcement Learning)
+
+## Uses
+
+### Direct Use
+This model is designed for:
+- Competitive programming problem solving
+- Code generation with step-by-step reasoning
+- Algorithm implementation and explanation
+
+## Training Details
+
+### Training Data
+- **Primary Dataset:** nvidia/OpenCodeReasoning (split_0)
+- **Training Samples:** 
+  - SFT: 80 samples
+  - GRPO: 100 samples
+- **Data Filtering:** Samples were filtered based on reasoning token length.
+
 ##  Results (LiveCodeBench Evaluation)
 
 | Model | Pass@1 | Pass@5 | Easy Pass@1 | Medium Pass@1 | Hard Pass@1 |
