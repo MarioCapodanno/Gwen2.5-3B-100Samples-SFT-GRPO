@@ -45,8 +45,8 @@ def quick_sweep(
             # before calling train_step. We just run n_steps of train then a val step.
             train_losses = []
             for _ in range(n_steps):
-                l = train_step()
-                train_losses.append(l)
+                loss_val = train_step()
+                train_losses.append(loss_val)
 
             val_loss = val_step()
             results[(lr, wr)] = val_loss

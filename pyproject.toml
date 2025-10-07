@@ -25,3 +25,17 @@ Homepage = "https://huggingface.co/MarioCap/Qwen2.5-3B-OCR-100S"
 gwen25 = "gwen25.cli:main"
 
 
+[tool.ruff]
+line-length = 88
+# Exclude common virtualenv and git directories and notebooks (auto-generated)
+exclude = [
+  ".venv",
+  "venv",
+  ".git",
+  "build",
+  "dist",
+  "gwen25/notebooks",
+  "notebook_output",
+]
+
+
