@@ -6,18 +6,21 @@ def main():
     # %%capture
     import os
     if "COLAB_" not in "".join(os.environ.keys()):
-    #     !pip install unsloth vllm google.generativeai
+        #     !pip install unsloth vllm google.generativeai
+        pass
     else:
         # [NOTE] Do the below ONLY in Colab! Use [[pip install unsloth vllm]]
+        pass
     #     !pip install --no-deps unsloth vllm
 
     #@title Colab Extra Install { display-mode: "form" }
     # %%capture
     import os
     if "COLAB_" not in "".join(os.environ.keys()):
-    #     !pip install unsloth vllm
+        #     !pip install unsloth vllm
+        pass
     else:
-    #     !pip install --no-deps unsloth vllm
+        #     !pip install --no-deps unsloth vllm
         # [NOTE] Do the below ONLY in Colab! Use [[pip install unsloth vllm]]
         # Skip restarting message in Colab
         import sys, re, requests; modules = list(sys.modules.keys())
@@ -186,6 +189,32 @@ def main():
     dataset["text"][13]
     from trl import SFTTrainer, SFTConfig
 
+    # Optional auto-hyperparameter recommendation based on dataset size.
+    # Set environment variable AUTO_HPARAMS=1 to enable automatic suggestions.
+    auto_hparams_cfg = None
+    try:
+        import os
+        if os.environ.get("AUTO_HPARAMS", "0") == "1":
+            from gwen25.pipelines.hyperparams import recommend_hyperparams
+            # dataset is a Hugging Face Dataset with len()
+            try:
+                ds_len = len(dataset)
+            except Exception:
+                # Fallback: use a conservative default
+                ds_len = 80
+            auto_hparams_cfg = recommend_hyperparams(
+                dataset_size=ds_len,
+                base_lr=2e-4,
+                per_device_train_batch_size=1,
+                gradient_accumulation_steps=2,
+                num_train_epochs=2,
+                base_warmup_steps=5,
+                target_effective_batch=8,
+            )
+            print("Auto-hyperparams suggestion:", auto_hparams_cfg)
+    except Exception as e:
+        print("Auto-hyperparams module unavailable or failed:", e)
+
     # Initialize the SFTTrainer to fine-tune the Qwen2.5-3B model with LoRA adapters.
     # The model passed here was previously loaded via FastLanguageModel.from_pretrained and wrapped with LoRA using get_peft_model.
     # This allows us to fine-tune only a small number of trainable parameters (efficient PEFT),
@@ -193,24 +222,33 @@ def main():
     # We use SFTTrainer because it makes it easy to fine-tune Hugging Face models — especially when using LoRA.
 
 
+    # Use auto_hparams_cfg to override defaults if available
+    sft_kwargs = dict(
+        dataset_text_field = "text", # setting here the prompt we created
+        per_device_train_batch_size = 1,
+        gradient_accumulation_steps = 2,
+        warmup_steps = 5,
+        num_train_epochs = 2, # Set this for 1 full training run.
+        learning_rate = 2e-4, # Reduce to 2e-5 for long training runs
+        logging_steps = 5,
+        optim = "adamw_8bit",
+        weight_decay = 0.01,
+        lr_scheduler_type = "linear",
+        seed = 3407,
+        report_to = "none",
+    )
+
+    if auto_hparams_cfg:
+        # Override only the recommended fields
+        for k in ("learning_rate", "gradient_accumulation_steps", "warmup_steps", "num_train_epochs"):
+            if k in auto_hparams_cfg and auto_hparams_cfg[k] is not None:
+                sft_kwargs[k] = auto_hparams_cfg[k]
+
     trainer = SFTTrainer(
         model = model,
         tokenizer = tokenizer,
         train_dataset = dataset,
-        args = SFTConfig(
-            dataset_text_field = "text", # setting here the prompt we created
-            per_device_train_batch_size = 1,
-            gradient_accumulation_steps = 2,
-            warmup_steps = 5,
-            num_train_epochs = 2, # Set this for 1 full training run.
-            learning_rate = 2e-4, # Reduce to 2e-5 for long training runs
-            logging_steps = 5,
-            optim = "adamw_8bit",
-            weight_decay = 0.01,
-            lr_scheduler_type = "linear",
-            seed = 3407,
-            report_to = "none",
-        ),
+        args = SFTConfig(**sft_kwargs),
     )
     # Start the supervised fine-tuning process using the configured trainer
     trainer.train()

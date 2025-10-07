@@ -67,3 +67,25 @@ graph TD
 - ⚠️ **Medium Problems**: Slight 2.26% decrease (potential overfitting to easy cases)
 -  **Hard Problems**: No successful solutions (both models)
 
+## Auto hyperparameter recommendations
+
+An optional helper was added to automatically recommend conservative changes to
+learning rate, gradient accumulation, and warmup steps based on the dataset
+size. It is implemented in `gwen25/pipelines/hyperparams.py` and can be enabled
+when running the fine-tuning notebook or script by setting the environment
+variable `AUTO_HPARAMS=1`.
+
+Example usage (opt-in):
+
+```
+# Enable suggestions; the script will print recommended LR / accum / warmup
+AUTO_HPARAMS=1 python gwen25/notebooks/finetuning.py
+```
+
+Notes:
+- The recommendation is heuristic and conservative; it's intended to avoid
+    obvious instability (too-large LR for large datasets) and to suggest
+    reasonable effective batch sizes when memory is limited.
+- For best results, treat these as starting points and run short validation
+    sweeps when possible. See references in the module for rationale.
+
